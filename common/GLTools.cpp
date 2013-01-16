@@ -5,15 +5,12 @@
  *      Author: biserd
  */
 
+#include "GLTools.h"
 #include <iostream>
-#include <vector>
 #include <fstream>
 #include <stdexcept>
 #include <sstream>
-#include <GL/glew.h>
-#include <GL/freeglut.h>
 #include <glutil/Shader.h>
-#include "GLTools.h"
 
 // Location of shader files
 #define LOCAL_FILE_DIR "data/"
@@ -168,7 +165,9 @@ int main(int argc, char** argv)
 #endif
     glutInitWindowSize (width, height);
     glutInitWindowPosition (300, 200);
-    int window = glutCreateWindow (argv[0]);
+    glutCreateWindow (argv[0]);
+
+//TODO call glload::LoadFunctions
 
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 

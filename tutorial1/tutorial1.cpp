@@ -1,11 +1,76 @@
-/*
- * tutorial1.cpp
- *
- *  Created on: Jan 11, 2013
- *      Author: biserd
- */
-#include "GLTools.h"
+//Copyright (C) 2010-2012 by Jason L. McKesson
+//This file is licensed under the MIT License.
+
+
+
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <stdio.h>
+#include <glload/gl_3_2_comp.h>
 #include <GL/freeglut.h>
+
+
+GLuint CreateShader(GLenum eShaderType, const std::string &strShaderFile)
+{
+    GLuint shader = glCreateShader(eShaderType);
+    const char *strFileData = strShaderFile.c_str();
+    glShaderSource(shader, 1, &strFileData, NULL);
+
+    glCompileShader(shader);
+
+    GLint status;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    if (status == GL_FALSE)
+    {
+        GLint infoLogLength;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+        GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+        glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+
+        const char *strShaderType = NULL;
+        switch(eShaderType)
+        {
+            case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
+            case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
+            case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+        }
+
+        fprintf(stderr, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
+        delete[] strInfoLog;
+    }
+
+    return shader;
+}
+
+GLuint CreateProgram(const std::vector<GLuint> &shaderList)
+{
+    GLuint program = glCreateProgram();
+
+    for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
+        glAttachShader(program, shaderList[iLoop]);
+
+    glLinkProgram(program);
+
+    GLint status;
+    glGetProgramiv (program, GL_LINK_STATUS, &status);
+    if (status == GL_FALSE)
+    {
+        GLint infoLogLength;
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+        GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+        glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
+        fprintf(stderr, "Linker failure: %s\n", strInfoLog);
+        delete[] strInfoLog;
+    }
+
+    for(size_t iLoop = 0; iLoop < shaderList.size(); iLoop++)
+        glDetachShader(program, shaderList[iLoop]);
+
+    return program;
+}
 
 GLuint theProgram;
 
@@ -99,7 +164,7 @@ void reshape (int w, int h)
 
 //Called whenever a key on the keyboard was pressed.
 //The key is given by the ''key'' parameter, which is in ASCII.
-//It's often a good idea to have the escape key (ASCII value 27) call glutLeaveMainLoop() to
+//It's often a good idea to have the escape key (ASCII value 27) call glutLeaveMainLoop() to 
 //exit the program.
 void keyboard(unsigned char key, int x, int y)
 {
@@ -111,3 +176,5 @@ void keyboard(unsigned char key, int x, int y)
     }
 }
 
+
+unsigned int defaults(unsigned int displayMode, int &width, int &height) {return displayMode;}

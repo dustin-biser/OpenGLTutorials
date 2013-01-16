@@ -20,18 +20,40 @@ ifndef AR
 endif
 
 ifeq ($(config),debug)
-  OBJDIR     = ../obj/Debug/tutorial1
+  OBJDIR     = obj/Debug
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/tutorial1
-  DEFINES   += -DDEBUG
-  INCLUDES  += -I. -I../common
+  DEFINES   += -DDEBUG -DFREEGLUT_STATIC -D_LIB -DFREEGLUT_LIB_PRAGMAS=0 -DLOAD_X11
+  INCLUDES  += -I../ext/glsdk/glload/include -I../ext/glsdk/glutil/include -I../ext/glsdk/freeglut/include -I. -I../common
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wall -std=c++0x
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -L../lib
-  LIBS      += -lGLTools
+  LDFLAGS   += -L../ext/glsdk/glload/lib -L../ext/glsdk/glutil/lib -L../ext/glsdk/freeglut/lib -L../lib
+  LIBS      += -lframework -lglloadD -lglutilD -lfreeglutD -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
-  LDDEPS    += ../lib/libGLTools.a
+  LDDEPS    += ../lib/libframework.a
+  LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+  endef
+endif
+
+ifeq ($(config),release)
+  OBJDIR     = obj/Release
+  TARGETDIR  = .
+  TARGET     = $(TARGETDIR)/tutorial1
+  DEFINES   += -DRELEASE -DNDEBUG -DFREEGLUT_STATIC -D_LIB -DFREEGLUT_LIB_PRAGMAS=0 -DLOAD_X11
+  INCLUDES  += -I../ext/glsdk/glload/include -I../ext/glsdk/glutil/include -I../ext/glsdk/freeglut/include -I. -I../common
+  CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -g -Wall -std=c++0x
+  CXXFLAGS  += $(CFLAGS) 
+  LDFLAGS   += -L../ext/glsdk/glload/lib -L../ext/glsdk/glutil/lib -L../ext/glsdk/freeglut/lib -L../lib
+  LIBS      += -lframework -lglload -lglutil -lfreeglut -lGL -lGLU
+  RESFLAGS  += $(DEFINES) $(INCLUDES) 
+  LDDEPS    += ../lib/libframework.a
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
   define PREBUILDCMDS
   endef
@@ -42,6 +64,7 @@ ifeq ($(config),debug)
 endif
 
 OBJECTS := \
+	$(OBJDIR)/tutorial1.o \
 
 RESOURCES := \
 
@@ -102,5 +125,8 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
+$(OBJDIR)/tutorial1.o: tutorial1.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)

@@ -1,33 +1,53 @@
-solution "OpenGLTutorials"
-    configurations { "Debug" }
+dofile("ext/glsdk/links.lua")
 
-    project "GLTools"
+local usedLibs = {"glload", "glutil", "freeglut"}
+local defineList = {"LOAD_X11", "FREEGLUT_STATIC"}
+local linkList = {"GL", "GLU"}
+local libdirList = {"lib", "ext/glsdk/freeglut/lib", "ext/glsdk/glload/lib",
+                    "ext/glsdk/glutil/lib"}
+local includeDirList = {"common", "ext/glsdk/freeglut/include", "ext/glsdk/glutil/include",
+                        "ext/glsdk/glload/include"}
+
+
+solution "OpenGLTutorials"
+    configurations { "Debug", "Release" }
+
+    configuration  "Debug"
+        defines { "DEBUG" }
+        flags {"Symbols", "ExtraWarnings"}
+
+    configuration  "Release"
+        defines { "RELEASE", "NDEBUG" }
+        flags {"Symbols", "ExtraWarnings"}
+
+    project "framework"
         kind "StaticLib"
         language "C++"
-        links { "GLEW", "GL", "GLUT", "glutil"}
-        libdirs { "/usr/lib/", "/usr/local/lib", "ext/glutil/lib" }
+        location "common"
+        links(linkList)
+        UseLibs(usedLibs)
+        libdirs(libdirList)
         buildoptions{"-std=c++0x"}
-        includedirs {"common", "ext/glsdk/glutil/include"}
-        objdir "obj"
-        files { "common/*.cpp", "common/*.h"}
+        includedirs(includeDirList)
+        objdir "common/obj"
+        defines(defineList)
+        files { "common/framework.cpp"}
         targetdir "lib"
 
-        configuration  "Debug"
-            defines { "DEBUG" }
-            flags {"Symbols", "ExtraWarnings"}
+    project "tutorial1"
+        kind "ConsoleApp"
+        language "C++"
+        location "tutorial1"
+        links {"framework"}
+        UseLibs(usedLibs)
+        links(linkList)
+        libdirs(libdirList)
+        buildoptions { "-std=c++0x" }
+        includedirs { "tutorial1" }
+        includedirs(includeDirList)
+        objdir "tutorial1/obj"
+        defines(defineList)
+        files { "tutorial1/tutorial1.cpp" }
+        targetdir "tutorial1"
 
-    --project "tutorial1"
-        --kind "ConsoleApp"
-        --language "C++"
-        --location "tutorial1"
-        --links { "GLTools" }
-        --libdirs { "lib" }
-        --buildoptions { "-std=c++0x" }
-        --includedirs { "tutorial1", "common" }
-        --objdir "obj"
-        --targetdir "tutorial1"
-
-        --configuration  "Debug"
-            --defines { "DEBUG" }
-            --flags {"Symbols", "ExtraWarnings"}
 

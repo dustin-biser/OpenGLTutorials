@@ -6,28 +6,35 @@ ifndef config
 endif
 export config
 
-PROJECTS := GLTools
+PROJECTS := framework tutorial1
 
 .PHONY: all clean help $(PROJECTS)
 
 all: $(PROJECTS)
 
-GLTools: 
-	@echo "==== Building GLTools ($(config)) ===="
-	@${MAKE} --no-print-directory -C . -f GLTools.make
+framework: 
+	@echo "==== Building framework ($(config)) ===="
+	@${MAKE} --no-print-directory -C common -f Makefile
+
+tutorial1: framework
+	@echo "==== Building tutorial1 ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial1 -f Makefile
 
 clean:
-	@${MAKE} --no-print-directory -C . -f GLTools.make clean
+	@${MAKE} --no-print-directory -C common -f Makefile clean
+	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
 	@echo ""
 	@echo "CONFIGURATIONS:"
 	@echo "   debug"
+	@echo "   release"
 	@echo ""
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   GLTools"
+	@echo "   framework"
+	@echo "   tutorial1"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

@@ -8,6 +8,12 @@
 #ifndef GLTOOLS_H_
 #define GLTOOLS_H_
 
+#include <vector>
+#include <string>
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <GL/freeglut.h>
+
 namespace GLTools {
 	GLuint createShader(GLenum eShaderType, const std::string &strShaderFile);
 
