@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := framework tutorial1
+PROJECTS := framework tutorial1 FragPosition VertexColors
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -20,9 +20,19 @@ tutorial1: framework
 	@echo "==== Building tutorial1 ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile
 
+FragPosition: framework
+	@echo "==== Building FragPosition ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial2 -f FragPosition.make
+
+VertexColors: framework
+	@echo "==== Building VertexColors ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make
+
 clean:
 	@${MAKE} --no-print-directory -C common -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
+	@${MAKE} --no-print-directory -C tutorial2 -f FragPosition.make clean
+	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -36,5 +46,7 @@ help:
 	@echo "   clean"
 	@echo "   framework"
 	@echo "   tutorial1"
+	@echo "   FragPosition"
+	@echo "   VertexColors"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

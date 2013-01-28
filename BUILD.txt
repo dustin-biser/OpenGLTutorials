@@ -1,4 +1,4 @@
 For linux systems run the following:
 
-$ premake4 --cc=gcc --os=linux gmake
+$ premake4 gmake
 $ make config=debug

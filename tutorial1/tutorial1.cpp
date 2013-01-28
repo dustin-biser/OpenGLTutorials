@@ -1,15 +1,9 @@
-//Copyright (C) 2010-2012 by Jason L. McKesson
-//This file is licensed under the MIT License.
-
-
-
 #include <algorithm>
 #include <string>
 #include <vector>
 #include <stdio.h>
 #include <glload/gl_3_2_comp.h>
 #include <GL/freeglut.h>
-
 
 GLuint CreateShader(GLenum eShaderType, const std::string &strShaderFile)
 {
@@ -88,7 +82,7 @@ const std::string strFragmentShader(
         "out vec4 outputColor;\n"
         "void main()\n"
         "{\n"
-        "   outputColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
+        "   outputColor = vec4(1.0f, 0.4f, 1.0f, 0.2f);\n"
         "}\n"
         );
 
@@ -108,22 +102,24 @@ const float vertexPositions[] = {
     0.75f, 0.75f, 0.0f, 1.0f,
     0.75f, -0.75f, 0.0f, 1.0f,
     -0.75f, -0.75f, 0.0f, 1.0f,
+    -0.75f, 0.75f, 0.0f, 1.0f,
 };
 
-GLuint positionBufferObject;
+GLuint positionBufferId;
 GLuint vao;
 
 
 void InitializeVertexBuffer()
 {
-    glGenBuffers(1, &positionBufferObject);
+    glGenBuffers(1, &positionBufferId);
 
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBufferId);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-//Called after the window and OpenGL are initialized. Called exactly once, before the main loop.
+// Called after the window and OpenGL are initialized. Called exactly once,
+// before the main loop.
 void init()
 {
     InitializeProgram();
@@ -133,21 +129,21 @@ void init()
     glBindVertexArray(vao);
 }
 
-//Called to update the display.
-//You should call glutSwapBuffers after all of your rendering to display what you rendered.
-//If you need continuous updates of the screen, call glutPostRedisplay() at the end of the function.
+// Called to update the display. You should call glutSwapBuffers after all of
+// your rendering to display what you rendered. If you need continuous updates of
+// the screen, call glutPostRedisplay() at the end of the function.
 void display()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.2f, 0.2f, 0.2f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(theProgram);
 
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, positionBufferId);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     glDisableVertexAttribArray(0);
     glUseProgram(0);
@@ -156,10 +152,21 @@ void display()
 }
 
 //Called whenever the window is resized. The new window size is given, in pixels.
-//This is an opportunity to call glViewport or glScissor to keep up with the change in size.
+//This is an opportunity to call glViewport or glScissor to keep up with the
+//change in size.
 void reshape (int w, int h)
 {
-    glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+	float aspectRatio = (float) w / (float) h;
+	unsigned int delta;
+	if (aspectRatio > 1){
+		delta = w - h;
+		glViewport(delta / 2.0, 0, (GLsizei) h, (GLsizei) h);
+	}
+	else {
+		delta = h - w;
+		glViewport(0, delta / 2.0, (GLsizei) w, (GLsizei) w);
+	}
+
 }
 
 //Called whenever a key on the keyboard was pressed.
@@ -178,3 +185,4 @@ void keyboard(unsigned char key, int x, int y)
 
 
 unsigned int defaults(unsigned int displayMode, int &width, int &height) {return displayMode;}
+

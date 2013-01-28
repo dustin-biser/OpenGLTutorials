@@ -50,4 +50,36 @@ solution "OpenGLTutorials"
         files { "tutorial1/tutorial1.cpp" }
         targetdir "tutorial1"
 
+    project "FragPosition"
+        kind "ConsoleApp"
+        language "C++"
+        location "tutorial2"
+        links {"framework"}
+        UseLibs(usedLibs)
+        links(linkList)
+        libdirs(libdirList)
+        buildoptions { "-std=c++0x" }
+        includedirs { "tutorial2" }
+        includedirs(includeDirList)
+        objdir "tutorial2/obj"
+        defines(defineList)
+        files { "tutorial2/FragPosition.cpp" }
+        targetdir "tutorial2"
+
+    project "VertexColors"
+        kind "ConsoleApp"
+        language "C++"
+        location "tutorial2"
+        links {"framework"}
+        UseLibs(usedLibs)
+        links(linkList)
+        libdirs(libdirList)
+        buildoptions { "-std=c++0x" }
+        includedirs { "tutorial2" }
+        includedirs(includeDirList)
+        objdir "tutorial2/obj"
+        defines(defineList)
+        files { "tutorial2/VertexColors.cpp" }
+        targetdir "tutorial2"
+
 
