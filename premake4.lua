@@ -82,4 +82,4 @@ solution "OpenGLTutorials"
         files { "tutorial2/VertexColors.cpp" }
         targetdir "tutorial2"
 
-
+dofile("tutorial3/tutorial3.lua")

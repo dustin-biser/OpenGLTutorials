@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := framework tutorial1 FragPosition VertexColors
+PROJECTS := framework tutorial1 FragPosition VertexColors cpuPositionOffset vertPositionOffset
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -28,11 +28,21 @@ VertexColors: framework
 	@echo "==== Building VertexColors ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make
 
+cpuPositionOffset: framework
+	@echo "==== Building cpuPositionOffset ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make
+
+vertPositionOffset: framework
+	@echo "==== Building vertPositionOffset ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make
+
 clean:
 	@${MAKE} --no-print-directory -C common -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial2 -f FragPosition.make clean
 	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -48,5 +58,7 @@ help:
 	@echo "   tutorial1"
 	@echo "   FragPosition"
 	@echo "   VertexColors"
+	@echo "   cpuPositionOffset"
+	@echo "   vertPositionOffset"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
