@@ -20,9 +20,9 @@ ifndef AR
 endif
 
 ifeq ($(config),debug)
-  OBJDIR     = obj/Debug/cpuPositionOffset
+  OBJDIR     = obj/Debug/fragChangeColor
   TARGETDIR  = .
-  TARGET     = $(TARGETDIR)/cpuPositionOffset
+  TARGET     = $(TARGETDIR)/fragChangeColor
   DEFINES   += -DDEBUG -DFREEGLUT_STATIC -D_LIB -DFREEGLUT_LIB_PRAGMAS=0 -DLOAD_X11
   INCLUDES  += -I../ext/glsdk/glload/include -I../ext/glsdk/glutil/include -I../ext/glsdk/freeglut/include -I../common
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
@@ -42,9 +42,9 @@ ifeq ($(config),debug)
 endif
 
 ifeq ($(config),release)
-  OBJDIR     = obj/Release/cpuPositionOffset
+  OBJDIR     = obj/Release/fragChangeColor
   TARGETDIR  = .
-  TARGET     = $(TARGETDIR)/cpuPositionOffset
+  TARGET     = $(TARGETDIR)/fragChangeColor
   DEFINES   += -DRELEASE -DNDEBUG -DFREEGLUT_STATIC -D_LIB -DFREEGLUT_LIB_PRAGMAS=0 -DLOAD_X11
   INCLUDES  += -I../ext/glsdk/glload/include -I../ext/glsdk/glutil/include -I../ext/glsdk/freeglut/include -I../common
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
@@ -64,7 +64,7 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/cpuPositionOffset.o \
+	$(OBJDIR)/fragChangeColor.o \
 
 RESOURCES := \
 
@@ -82,7 +82,7 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 	@:
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES)
-	@echo Linking cpuPositionOffset
+	@echo Linking fragChangeColor
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -103,7 +103,7 @@ else
 endif
 
 clean:
-	@echo Cleaning cpuPositionOffset
+	@echo Cleaning fragChangeColor
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -125,7 +125,7 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/cpuPositionOffset.o: cpuPositionOffset.cpp
+$(OBJDIR)/fragChangeColor.o: fragChangeColor.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 

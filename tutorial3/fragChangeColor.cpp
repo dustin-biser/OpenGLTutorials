@@ -10,7 +10,7 @@
 #include <string.h>
 #include <glload/gl_3_3.h>
 #include <GL/freeglut.h>
-#include "../framework/framework.h"
+#include "framework.h"
 
 GLuint theProgram;
 GLuint elapsedTimeUniform;
@@ -32,7 +32,7 @@ void InitializeProgram()
 
 	glUseProgram(theProgram);
 	glUniform1f(loopDurationUnf, 5.0f);
-	glUniform1f(fragLoopDurUnf, 10.0f);
+	glUniform1f(fragLoopDurUnf, 1.0f);
 	glUseProgram(0);
 }
 

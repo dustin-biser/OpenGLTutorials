@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := framework tutorial1 FragPosition VertexColors cpuPositionOffset vertPositionOffset
+PROJECTS := framework tutorial1 FragPosition VertexColors vertPositionOffset cpuPositionOffset fragChangeColor
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -28,21 +28,26 @@ VertexColors: framework
 	@echo "==== Building VertexColors ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make
 
+vertPositionOffset: framework
+	@echo "==== Building vertPositionOffset ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make
+
 cpuPositionOffset: framework
 	@echo "==== Building cpuPositionOffset ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make
 
-vertPositionOffset: framework
-	@echo "==== Building vertPositionOffset ($(config)) ===="
-	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make
+fragChangeColor: framework
+	@echo "==== Building fragChangeColor ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f fragChangeColor.make
 
 clean:
 	@${MAKE} --no-print-directory -C common -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial2 -f FragPosition.make clean
 	@${MAKE} --no-print-directory -C tutorial2 -f VertexColors.make clean
-	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make clean
 	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f fragChangeColor.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -58,7 +63,8 @@ help:
 	@echo "   tutorial1"
 	@echo "   FragPosition"
 	@echo "   VertexColors"
-	@echo "   cpuPositionOffset"
 	@echo "   vertPositionOffset"
+	@echo "   cpuPositionOffset"
+	@echo "   fragChangeColor"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
