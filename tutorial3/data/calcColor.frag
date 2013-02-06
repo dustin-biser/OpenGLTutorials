@@ -10,8 +10,10 @@ const vec4 secondColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
 
 void main()
 {
-	float currTime = mod(time, fragLoopDuration);
-	float currLerp = currTime / fragLoopDuration;
+	float t = mod(time, fragLoopDuration);
+	float w = 3.14159 * 2 / fragLoopDuration; // angular frequency
+	float cosSquared = cos(w*time);
+	cosSquared *= cosSquared;
 	
-	outputColor = mix(firstColor, secondColor, currLerp);
+	outputColor = mix(firstColor, secondColor, cosSquared);
 }

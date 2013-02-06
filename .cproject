@@ -40,6 +40,7 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1692146618.871326253" name="vertCalcOffset_Remixed" rcbsApplicability="disable" resourcePath="tutorial3/vertCalcOffset_Remixed" toolsToInvoke=""/>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>

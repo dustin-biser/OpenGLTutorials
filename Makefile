@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := framework tutorial1 FragPosition VertexColors vertPositionOffset cpuPositionOffset fragChangeColor
+PROJECTS := framework tutorial1 FragPosition VertexColors vertPositionOffset cpuPositionOffset fragChangeColor vertCalcOffset vertCalcOffset_Remixed
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -40,6 +40,14 @@ fragChangeColor: framework
 	@echo "==== Building fragChangeColor ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial3 -f fragChangeColor.make
 
+vertCalcOffset: framework
+	@echo "==== Building vertCalcOffset ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset.make
+
+vertCalcOffset_Remixed: framework
+	@echo "==== Building vertCalcOffset_Remixed ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset_Remixed.make
+
 clean:
 	@${MAKE} --no-print-directory -C common -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
@@ -48,6 +56,8 @@ clean:
 	@${MAKE} --no-print-directory -C tutorial3 -f vertPositionOffset.make clean
 	@${MAKE} --no-print-directory -C tutorial3 -f cpuPositionOffset.make clean
 	@${MAKE} --no-print-directory -C tutorial3 -f fragChangeColor.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset.make clean
+	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset_Remixed.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -66,5 +76,7 @@ help:
 	@echo "   vertPositionOffset"
 	@echo "   cpuPositionOffset"
 	@echo "   fragChangeColor"
+	@echo "   vertCalcOffset"
+	@echo "   vertCalcOffset_Remixed"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

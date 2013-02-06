@@ -44,3 +44,30 @@ project "fragChangeColor"
     objdir "obj"
     defines(defineList)
     files { "fragChangeColor.cpp" }
+
+project "vertCalcOffset"
+    kind "ConsoleApp"
+    language "C++"
+    links {"framework"}
+    UseLibs(usedLibs)
+    links(linkList)
+    libdirs(libdirList)
+    buildoptions { "-std=c++0x" }
+    includedirs(includeDirList)
+    objdir "obj"
+    defines(defineList)
+    files { "vertCalcOffset.cpp" }
+
+project "vertCalcOffset_Remixed"
+    kind "ConsoleApp"
+    language "C++"
+    links {"framework"}
+    UseLibs(usedLibs)
+    links(linkList)
+    libdirs(libdirList)
+    buildoptions { "-std=c++0x" }
+    includedirs(includeDirList)
+    objdir "obj"
+    defines(defineList)
+    files { "vertCalcOffset_Remixed.cpp" }
+
