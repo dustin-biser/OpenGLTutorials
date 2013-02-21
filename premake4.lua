@@ -83,3 +83,4 @@ solution "OpenGLTutorials"
         targetdir "tutorial2"
 
 dofile("tutorial3/tutorial3.lua")
+dofile("tutorial4/tutorial4.lua")

@@ -6,7 +6,7 @@ ifndef config
 endif
 export config
 
-PROJECTS := framework tutorial1 FragPosition VertexColors vertPositionOffset cpuPositionOffset fragChangeColor vertCalcOffset vertCalcOffset_Remixed
+PROJECTS := framework tutorial1 FragPosition VertexColors vertPositionOffset cpuPositionOffset fragChangeColor vertCalcOffset vertCalcOffset_Remixed OrthoCube AspectRatio MatrixPerspective ShaderPerspective
 
 .PHONY: all clean help $(PROJECTS)
 
@@ -48,6 +48,22 @@ vertCalcOffset_Remixed: framework
 	@echo "==== Building vertCalcOffset_Remixed ($(config)) ===="
 	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset_Remixed.make
 
+OrthoCube: framework
+	@echo "==== Building OrthoCube ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial4 -f OrthoCube.make
+
+AspectRatio: framework
+	@echo "==== Building AspectRatio ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial4 -f AspectRatio.make
+
+MatrixPerspective: framework
+	@echo "==== Building MatrixPerspective ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial4 -f MatrixPerspective.make
+
+ShaderPerspective: framework
+	@echo "==== Building ShaderPerspective ($(config)) ===="
+	@${MAKE} --no-print-directory -C tutorial4 -f ShaderPerspective.make
+
 clean:
 	@${MAKE} --no-print-directory -C common -f Makefile clean
 	@${MAKE} --no-print-directory -C tutorial1 -f Makefile clean
@@ -58,6 +74,10 @@ clean:
 	@${MAKE} --no-print-directory -C tutorial3 -f fragChangeColor.make clean
 	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset.make clean
 	@${MAKE} --no-print-directory -C tutorial3 -f vertCalcOffset_Remixed.make clean
+	@${MAKE} --no-print-directory -C tutorial4 -f OrthoCube.make clean
+	@${MAKE} --no-print-directory -C tutorial4 -f AspectRatio.make clean
+	@${MAKE} --no-print-directory -C tutorial4 -f MatrixPerspective.make clean
+	@${MAKE} --no-print-directory -C tutorial4 -f ShaderPerspective.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -78,5 +98,9 @@ help:
 	@echo "   fragChangeColor"
 	@echo "   vertCalcOffset"
 	@echo "   vertCalcOffset_Remixed"
+	@echo "   OrthoCube"
+	@echo "   AspectRatio"
+	@echo "   MatrixPerspective"
+	@echo "   ShaderPerspective"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"
