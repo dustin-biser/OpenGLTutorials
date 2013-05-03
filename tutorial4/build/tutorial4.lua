@@ -1,56 +1,9 @@
-project "OrthoCube"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../OrthoCube.cpp" }
+projectList = { "OrthoCube",
+                "AspectRatio",
+                "MatrixPerspective",
+                "ShaderPerspective" }
 
-project "AspectRatio"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../AspectRatio.cpp" }
-
-project "MatrixPerspective"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../MatrixPerspective.cpp" }
-
-project "ShaderPerspective"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../ShaderPerspective.cpp" }
-
+-- For each project name in "projectList", setup a new project.
+for i, projectName in ipairs(projectList) do
+    SetupProject(projectName, "../" .. projectName .. ".cpp")
+end

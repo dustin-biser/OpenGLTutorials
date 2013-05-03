@@ -1,69 +1,10 @@
-project "DepthBuffer"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../DepthBuffer.cpp" }
+projectList = { "DepthBuffer",
+                "DepthClamping",
+                "DepthFighting",
+                "VertexClipping",
+                "OverlapNoDepth" }
 
-project "DepthClamping"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../DepthClamping.cpp" }
-
-project "DepthFighting"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../DepthFighting.cpp" }
-
-project "VertexClipping"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../VertexClipping.cpp" }
-
-project "OverlapNoDepth"
-    kind "ConsoleApp"
-    language "C++"
-    links {"framework"}
-    UseLibs(usedLibs)
-    links(linkList)
-    libdirs(libdirList)
-    buildoptions { "-std=c++0x" }
-    includedirs(includeDirList)
-    objdir "obj"
-    defines(defineList)
-    targetdir "../bin"
-    files { "../OverlapNoDepth.cpp" }
+-- For each project name in "projectList", setup a new project.
+for i, projectName in ipairs(projectList) do
+    SetupProject(projectName, "../" .. projectName .. ".cpp")
+end
