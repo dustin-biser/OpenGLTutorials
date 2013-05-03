@@ -303,6 +303,14 @@ void keyboard(unsigned char key, int x, int y)
 		model1Offset[2] += zDelta;
 		glutPostRedisplay();
 		break;
+	case 'k':
+		model2Offset[2] -= zDelta;
+		glutPostRedisplay();
+		break;
+	case 'j':
+		model2Offset[2] += zDelta;
+		glutPostRedisplay();
+		break;
 	}
 }
 
