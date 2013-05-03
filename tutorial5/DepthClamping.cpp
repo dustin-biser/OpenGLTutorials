@@ -1,8 +1,6 @@
 //Copyright (C) 2010-2012 by Jason L. McKesson
 //This file is licensed under the MIT License.
 
-
-
 #include <string>
 #include <vector>
 #include <math.h>
@@ -21,6 +19,10 @@ GLuint perspectiveMatrixUnif;
 
 float perspectiveMatrix[16];
 const float fFrustumScale = 1.0f;
+
+// Model offsets for positioning objects in scene.
+GLfloat model1Offset[3] = {0.0f, 0.0f, 0.5f};
+GLfloat model2Offset[3] = {0.0f, 0.0f, -1.0f};
 
 void InitializeProgram()
 {
@@ -243,10 +245,10 @@ void display()
 	glUseProgram(theProgram);
 	glBindVertexArray(vao);
 
-	glUniform3f(offsetUniform, 0.0f, 0.0f, 0.5f);
+	glUniform3f(offsetUniform, model1Offset[0], model1Offset[1], model1Offset[2]);
 	glDrawElements(GL_TRIANGLES, ARRAY_COUNT(indexData), GL_UNSIGNED_SHORT, 0);
 
-	glUniform3f(offsetUniform, 0.0f, 0.0f, -1.0f);
+	glUniform3f(offsetUniform, model2Offset[0], model2Offset[1], model2Offset[2]);
 	glDrawElementsBaseVertex(GL_TRIANGLES, ARRAY_COUNT(indexData),
 		GL_UNSIGNED_SHORT, 0, numberOfVertices / 2);
 
@@ -277,6 +279,8 @@ void reshape (int w, int h)
 void keyboard(unsigned char key, int x, int y)
 {
 	static bool bDepthClampingActive = false;
+	GLfloat zDelta = 0.2f;
+
 	switch (key)
 	{
 	case 27:
@@ -289,6 +293,14 @@ void keyboard(unsigned char key, int x, int y)
 			glEnable(GL_DEPTH_CLAMP);
 
 		bDepthClampingActive = !bDepthClampingActive;
+		glutPostRedisplay();
+		break;
+	case 'p':
+		model1Offset[2] -= zDelta;
+		glutPostRedisplay();
+		break;
+	case 'm':
+		model1Offset[2] += zDelta;
 		glutPostRedisplay();
 		break;
 	}

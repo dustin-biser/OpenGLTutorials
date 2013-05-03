@@ -12,6 +12,8 @@
 #include <GL/freeglut.h>
 #include "../common/framework.h"
 
+#include <iostream>
+
 #define ARRAY_COUNT( array ) (sizeof( array ) / (sizeof( array[0] ) * (sizeof( array ) != sizeof(void*) || sizeof( array[0] ) <= sizeof(void*))))
 
 GLuint theProgram;
@@ -21,6 +23,10 @@ GLuint perspectiveMatrixUnif;
 
 float perspectiveMatrix[16];
 const float fFrustumScale = 1.0f;
+
+// Model offsets for positioning objects in scene.
+GLfloat model1Offset[3] = {0.0f, 0.0f, 0.5f};
+GLfloat model2Offset[3] = {0.0f, 0.0f, -1.0f};
 
 void InitializeProgram()
 {
@@ -243,10 +249,10 @@ void display()
 	glUseProgram(theProgram);
 	glBindVertexArray(vao);
 
-	glUniform3f(offsetUniform, 0.0f, 0.0f, 0.5f);
+	glUniform3f(offsetUniform, model1Offset[0], model1Offset[1], model1Offset[2]);
 	glDrawElements(GL_TRIANGLES, ARRAY_COUNT(indexData), GL_UNSIGNED_SHORT, 0);
 
-	glUniform3f(offsetUniform, 0.0f, 0.0f, -1.0f);
+	glUniform3f(offsetUniform, model2Offset[0], model2Offset[1], model2Offset[2]);
 	glDrawElementsBaseVertex(GL_TRIANGLES, ARRAY_COUNT(indexData),
 		GL_UNSIGNED_SHORT, 0, numberOfVertices / 2);
 
@@ -276,12 +282,22 @@ void reshape (int w, int h)
 //exit the program.
 void keyboard(unsigned char key, int x, int y)
 {
+	GLfloat zDelta = 0.2f;
 	switch (key)
 	{
 	case 27:
 		glutLeaveMainLoop();
-		return;
+		break;
+	case 'p':
+		model1Offset[2] -= zDelta;
+		glutPostRedisplay();
+		break;
+	case 'm':
+		model1Offset[2] += zDelta;
+		glutPostRedisplay();
+		break;
 	}
+
 }
 
 
