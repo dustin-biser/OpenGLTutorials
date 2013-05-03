@@ -1,6 +1,12 @@
+# Ignore build related files.
 **.o
 **.a
 **.d
 Makefile
 **MakeFile
 **.make
+
+
+# Ignore binaries
+tutorial*/bin
+ext/gtest/test1_example
