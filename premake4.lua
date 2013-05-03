@@ -1,11 +1,12 @@
 dofile("ext/glsdk/links.lua")
 
-local usedLibs = {"glload", "glutil", "freeglut"}
-local defineList = {"LOAD_X11", "FREEGLUT_STATIC"}
-local linkList = {"GL", "GLU"}
-local libdirList = {"lib", "ext/glsdk/freeglut/lib", "ext/glsdk/glload/lib",
+usedLibs = {"glload", "glutil", "freeglut"}
+defineList = {"LOAD_X11", "FREEGLUT_STATIC"}
+linkList = {"GL", "GLU"}
+
+libdirList = {"lib", "ext/glsdk/freeglut/lib", "ext/glsdk/glload/lib",
                     "ext/glsdk/glutil/lib"}
-local includeDirList = {"common", "ext/glsdk/freeglut/include", "ext/glsdk/glutil/include",
+includeDirList = {"common", "ext/glsdk/freeglut/include", "ext/glsdk/glutil/include",
                         "ext/glsdk/glload/include"}
 
 
@@ -20,6 +21,8 @@ solution "OpenGLTutorials"
         defines { "RELEASE", "NDEBUG" }
         flags {"Symbols", "ExtraWarnings"}
 
+
+    -- Build Static Library for framework code.
     project "framework"
         kind "StaticLib"
         language "C++"
@@ -34,53 +37,18 @@ solution "OpenGLTutorials"
         files { "common/framework.cpp"}
         targetdir "lib"
 
-    project "tutorial1"
-        kind "ConsoleApp"
-        language "C++"
-        location "tutorial1"
-        links {"framework"}
-        UseLibs(usedLibs)
-        links(linkList)
-        libdirs(libdirList)
-        buildoptions { "-std=c++0x" }
-        includedirs { "tutorial1" }
-        includedirs(includeDirList)
-        objdir "tutorial1/obj"
-        defines(defineList)
-        files { "tutorial1/tutorial1.cpp" }
-        targetdir "tutorial1"
+-- Build GTest Static Library.
+dofile("ext/gtest/build/gtest.lua")
 
-    project "FragPosition"
-        kind "ConsoleApp"
-        language "C++"
-        location "tutorial2"
-        links {"framework"}
-        UseLibs(usedLibs)
-        links(linkList)
-        libdirs(libdirList)
-        buildoptions { "-std=c++0x" }
-        includedirs { "tutorial2" }
-        includedirs(includeDirList)
-        objdir "tutorial2/obj"
-        defines(defineList)
-        files { "tutorial2/FragPosition.cpp" }
-        targetdir "tutorial2"
+-- Reset library includes so they can be accessed from within tutorial*.lua build files
+libdirList = {"../../lib", "../../ext/glsdk/freeglut/lib", "../../ext/glsdk/glload/lib",
+                "../../ext/glsdk/glutil/lib"}
+includeDirList = {"../../common", "../../ext/glsdk/freeglut/include", "../../ext/glsdk/glutil/include",
+                "../../ext/glsdk/glload/include"}
 
-    project "VertexColors"
-        kind "ConsoleApp"
-        language "C++"
-        location "tutorial2"
-        links {"framework"}
-        UseLibs(usedLibs)
-        links(linkList)
-        libdirs(libdirList)
-        buildoptions { "-std=c++0x" }
-        includedirs { "tutorial2" }
-        includedirs(includeDirList)
-        objdir "tutorial2/obj"
-        defines(defineList)
-        files { "tutorial2/VertexColors.cpp" }
-        targetdir "tutorial2"
-
-dofile("tutorial3/tutorial3.lua")
-dofile("tutorial4/tutorial4.lua")
+-- Now build the tutorials.
+dofile("tutorial1/build/tutorial1.lua")
+dofile("tutorial2/build/tutorial2.lua") 
+dofile("tutorial3/build/tutorial3.lua")
+dofile("tutorial4/build/tutorial4.lua")
+dofile("tutorial5/build/tutorial5.lua")
