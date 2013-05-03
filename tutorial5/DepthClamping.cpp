@@ -229,7 +229,7 @@ void init()
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
 }
 
@@ -279,7 +279,7 @@ void reshape (int w, int h)
 void keyboard(unsigned char key, int x, int y)
 {
 	static bool bDepthClampingActive = false;
-	GLfloat zDelta = 0.2f;
+	GLfloat zDelta = 0.1f;
 
 	switch (key)
 	{
