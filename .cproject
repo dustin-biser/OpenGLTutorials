@@ -48,12 +48,13 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tutorial1|tutorial2|tutorial3|tutorial4|tutorial5" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="tutorial6|tutorial1|tutorial2|tutorial3|tutorial4|tutorial5" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial1"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial2"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial3"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial4"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial5"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tutorial6"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
