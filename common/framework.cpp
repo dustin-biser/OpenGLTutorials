@@ -24,6 +24,14 @@
 
 namespace Framework
 {
+	/**
+	 * Loads a shader file by reading in the file and attempting to compile the shader.
+	 * If the file cannot be found, an std::runtime_error is thrown.
+	 * If there is a compilation error, a glutil::CompilerLinkException is thrown.
+	 * @param eShaderType
+	 * @param strShaderFilename
+	 * @return a GLuint representing the shader program identifier.
+	 */
     GLuint LoadShader(GLenum eShaderType, const std::string &strShaderFilename)
     {
         std::string strFilename = FindFileOrThrow(strShaderFilename);
