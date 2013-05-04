@@ -234,8 +234,16 @@ void display()
 //This is an opportunity to call glViewport or glScissor to keep up with the change in size.
 void reshape (int w, int h)
 {
-	cameraToClipMatrix[0].x = fFrustumScale * (h / (float)w);
-	cameraToClipMatrix[1].y = fFrustumScale;
+	float aspectRatio = w / (float) h;
+
+	if (w > h){
+		cameraToClipMatrix[0].x = fFrustumScale / aspectRatio;
+		cameraToClipMatrix[1].y = fFrustumScale;
+	}
+	else {
+		cameraToClipMatrix[0].x = fFrustumScale;
+		cameraToClipMatrix[1].y = fFrustumScale * aspectRatio;
+	}
 
 	glUseProgram(theProgram);
 	glUniformMatrix4fv(cameraToClipMatrixUnif, 1, GL_FALSE, glm::value_ptr(cameraToClipMatrix));
