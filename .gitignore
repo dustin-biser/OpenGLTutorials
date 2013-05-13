@@ -2,12 +2,17 @@
 **.o
 **.a
 **.d
-Makefile
+**Makefile
 **MakeFile
 **.make
 
 
 # Ignore binaries
-tutorial*/bin
+**bin
+**bin/*
 ext/gtest/test1_example
-tests/bin
+
+
+# Ignore config log files
+**config.log
+**config.status
