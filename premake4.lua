@@ -30,48 +30,55 @@ solution "OpenGLTutorials"
     project "framework"
         kind "StaticLib"
         language "C++"
-        location "common"
+        location "build"
         links(linkList)
         UseLibs(usedLibs)
         libdirs(libdirList)
         buildoptions{"-std=c++0x"}
         includedirs(includeDirList)
-        objdir "common/obj"
+        objdir "build/obj"
         defines(defineList)
-        files { "common/framework.cpp"}
-        excludes "common/empty.cpp"
+        files { "common/*.cpp"}
+        excludes "common/empty.cpp" 
         targetdir "lib"
 
 -- Build GTest Static Library.
-dofile("ext/gtest/build/gtest.lua")
+dofile("build/gtest.lua")
+
+-- Build utilities Static Library.
+--dofile("build/utils.lua")
+
+-- Build tests
+dofile("build/tests.lua")
 
 -- Reset library and includes directories so they can be accessed from the tutorial*.lua build files.
 libdirList = {"../../lib", "../../ext/glsdk/freeglut/lib", "../../ext/glsdk/glload/lib",
                 "../../ext/glsdk/glutil/lib"}
-includeDirList = {"../../common", "../../ext/glsdk/freeglut/include", "../../ext/glsdk/glutil/include",
-                "../../ext/glsdk/glload/include"}
+includeDirList = {"../../../common", "../../../ext/glsdk/freeglut/include", "../../../ext/glsdk/glutil/include",
+                "../../../ext/glsdk/glload/include"}
 
 -- Common project settings for each tutorial.
 function SetupProject(projName, ...)
-	project(projName)
-		kind "ConsoleApp"
-		language "c++"
-		includedirs {"../common"}
-		links "framework"
-		--Must be after including framwork... because GCC is stupid.
-		UseLibs(usedLibs)
+    project(projName)
+        kind "ConsoleApp"
+        language "c++"
+        includedirs {includeDirList}
+        links "framework"
+        --Must be after including framwork... because GCC is stupid.
+        UseLibs(usedLibs)
         links{linkList}
         libdirs(libdirList)
         buildoptions { "-std=c++0x" }
         objdir "obj"
         targetdir "../bin"
-		files {...}
+        files {...}
 end
 
 -- Now build the tutorials.
-dofile("tutorial1/build/tutorial1.lua")
-dofile("tutorial2/build/tutorial2.lua") 
-dofile("tutorial3/build/tutorial3.lua")
-dofile("tutorial4/build/tutorial4.lua")
-dofile("tutorial5/build/tutorial5.lua")
-dofile("tutorial6/build/tutorial6.lua")
+dofile("tutorials/tutorial1/build/tutorial1.lua")
+dofile("tutorials/tutorial2/build/tutorial2.lua") 
+dofile("tutorials/tutorial3/build/tutorial3.lua")
+dofile("tutorials/tutorial4/build/tutorial4.lua")
+dofile("tutorials/tutorial5/build/tutorial5.lua")
+dofile("tutorials/tutorial6/build/tutorial6.lua")
+dofile("tutorials/tutorial7/build/tutorial7.lua")
