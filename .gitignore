@@ -11,8 +11,10 @@
 **bin
 **bin/*
 ext/gtest/test1_example
+**libtool
 
 
-# Ignore config log files
+# Ignore config related files
 **config.log
 **config.status
+**config.h
