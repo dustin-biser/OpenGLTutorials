@@ -10,3 +10,4 @@ Makefile
 # Ignore binaries
 tutorial*/bin
 ext/gtest/test1_example
+tests/bin
